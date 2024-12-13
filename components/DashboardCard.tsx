@@ -1,9 +1,10 @@
-interface DashboardCardProps {
-  item: {
-    title: string
-    value: string
-    detail: string
-  },
+export interface DashboardCardItem {
+  title: string
+  value: string
+  detail: string
+}
+export interface DashboardCardProps {
+  item: DashboardCardItem
   className?: string
 }
 

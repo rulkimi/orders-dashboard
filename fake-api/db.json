@@ -216,5 +216,27 @@
       "date": "4-06-24 21.00",
       "amount": 30
     }
+  ],
+  "info": [
+    {
+      "title": "Total Revenue",
+      "value": "$115,237",
+      "detail": "From last month"
+    },
+    {
+      "title": "Total new user",
+      "value": "+20",
+      "detail": "From last month"
+    },
+    {
+      "title": "Total new merchant",
+      "value": "+3",
+      "detail": "From last month"
+    },
+    {
+      "title": "Total active user",
+      "value": "+250",
+      "detail": "Currently"
+    }
   ]
 }

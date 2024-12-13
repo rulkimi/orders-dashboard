@@ -1,12 +1,19 @@
 import DashboardCard from "@/components/DashboardCard"
+import { DashboardCardItem } from "@/components/DashboardCard"
 
-export default function Dashboard() {
-  const dashboardCardItems = [
-    { title: 'Total Revenue', value: '$115,237', detail: 'From last month' },
-    { title: 'Total new user', value: '+20', detail: 'From last month' },
-    { title: 'Total new merchant', value: '+3', detail: 'From last month' },
-    { title: 'Total active user', value: '+250', detail: 'Currently' },
-  ]
+async function getInfo(): Promise<DashboardCardItem[]> {
+  const response = await fetch('http://localhost:8000/info')
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  const info: DashboardCardItem[] = await response.json();
+  return info;
+}
+
+export default async function Dashboard() {
+  const dashboardCardItems = await getInfo();
   
   return (
     <div>

@@ -33,7 +33,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { Search, FilterIcon } from "lucide-react"
+import { 
+  Search, 
+  FilterIcon, 
+  ChevronRight, 
+  ChevronsRight, 
+  ChevronLeft, 
+  ChevronsLeft 
+} from "lucide-react"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -48,6 +55,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
+  const [goToPage, setGoToPage] = useState(5)
 
   const table = useReactTable({
     data,
@@ -173,6 +181,7 @@ export function DataTable<TData, TValue>({
             </option>
           ))}
         </select>
+        Page {table.getState().pagination.pageIndex + 1} of {Math.ceil(data.length / table.getState().pagination.pageSize)}
         <Button
           variant="outline"
           size="sm"
@@ -186,7 +195,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
-          &lt;&lt;
+          <ChevronsLeft />
         </Button>
         <Button
           variant="outline"
@@ -194,7 +203,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          &lt;
+          <ChevronLeft />
         </Button>
         <Button
           variant="outline"
@@ -202,7 +211,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          &gt;
+          <ChevronRight />
         </Button>
         <Button
           variant="outline"
@@ -210,7 +219,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
-          &gt;&gt;
+          <ChevronsRight />
         </Button>
       </div>
     </div>

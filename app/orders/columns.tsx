@@ -23,6 +23,8 @@ export type Order = {
   date: string
 }
 
+export type OrderStatus = Order["status"]
+
 export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: "id",
@@ -55,9 +57,6 @@ export const columns: ColumnDef<Order>[] = [
     header: ({ column }) => {
       return <div className="text-center">Status</div>
     },
-    cell: ({ row }) => {
-      return <div className="text-center">{row.getValue("status")}</div>
-    }
   },
   {
     accessorKey: "date",

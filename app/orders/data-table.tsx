@@ -47,6 +47,29 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
+import { OrderStatus } from "./columns"
+
+const getStatusStyles = (status: OrderStatus) => {
+  switch (status) {
+    case "preparing":
+      return { styleClass: "bg-yellow-100", text: "Preparing" };
+    case "waitpickup":
+      return { styleClass: "bg-blue-100", text: "Waiting for pickup..." };
+    case "completed":
+      return { styleClass: "bg-green-500 text-white", text: "Completed" };
+    case "cancel":
+      return { styleClass: "bg-gray-200", text: "Cancel" };
+    case "pending":
+      return { styleClass: "bg-gray-200", text: "Cancel" };
+    case "refund":
+      return { styleClass: "bg-gray-200", text: "Refund" };
+    case "nopickup":
+      return { styleClass: "bg-gray-200", text: "Did not pickup" };
+    default:
+      return { styleClass: "bg-gray-200", text: "Unknown" };
+  }
+};
+
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -150,14 +173,31 @@ export function DataTable<TData, TValue>({
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      {cell.column.id === "status" ? (
+                        (() => {
+                          const value = cell.getValue() as OrderStatus;
+                          const { styleClass, text } = getStatusStyles(value);
+                          return (
+                            <div className="flex justify-center">
+                              <span className={`${styleClass} px-3 py-1 rounded-full`}>
+                                {text}
+                              </span>
+                            </div>
+                          );
+                        })()
+                      ) : (
+                        flexRender(cell.column.columnDef.cell, cell.getContext())
+                      )}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={table.getVisibleLeafColumns().length} style={{ textAlign: "center" }}>
+                <TableCell
+                  colSpan={table.getVisibleLeafColumns().length}
+                  style={{ textAlign: "center" }}
+                >
                   No data available
                 </TableCell>
               </TableRow>

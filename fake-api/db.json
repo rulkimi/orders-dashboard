@@ -1,0 +1,220 @@
+{
+  "orders": [
+    {
+      "id": "RSQ0060",
+      "buyer": "Daniel Altaf Hasnan",
+      "merchant": "MBG Fruit Shop Mid Valley Megamal",
+      "status": "preparing",
+      "date": "4-06-24 20.00",
+      "amount": 50
+    },
+    {
+      "id": "RSQ0059",
+      "buyer": "Umendran",
+      "merchant": "E mart Mid Valley Megamal",
+      "status": "preparing",
+      "date": "4-06-24 20.00",
+      "amount": 45
+    },
+    {
+      "id": "RSQ0058",
+      "buyer": "Nabila Abd Rahim",
+      "merchant": "Kedai kopi Malaya Megamal",
+      "status": "waitpickup",
+      "date": "4-06-24 20.00",
+      "amount": 30
+    },
+    {
+      "id": "RSQ0057",
+      "buyer": "Siti Aisyah Zukri",
+      "merchant": "Oriental Kopi Mid Valley Megamal",
+      "status": "cancel",
+      "date": "4-06-24 20.00",
+      "amount": 20
+    },
+    {
+      "id": "RSQ0056",
+      "buyer": "DS Mike Chan",
+      "merchant": "MBG Fruit Shop Mid Valley Megamal",
+      "status": "pending",
+      "date": "4-06-24 20.00",
+      "amount": 35
+    },
+    {
+      "id": "RSQ0055",
+      "buyer": "Brendan Khoo",
+      "merchant": "E mart Mid Valley Megamal",
+      "status": "refund",
+      "date": "4-06-24 20.00",
+      "amount": 25
+    },
+    {
+      "id": "RSQ0054",
+      "buyer": "Peei Yeek",
+      "merchant": "Kedai kopi Malaya Megamal",
+      "status": "completed",
+      "date": "4-06-24 20.00",
+      "amount": 40
+    },
+    {
+      "id": "RSQ0053",
+      "buyer": "Nuruddin Zaim",
+      "merchant": "Oriental Kopi Mid Valley Megamal",
+      "status": "nopickup",
+      "date": "4-06-24 20.00",
+      "amount": 15
+    },
+    {
+      "id": "RSQ0052",
+      "buyer": "Mohd Zulfiqar",
+      "merchant": "MBG Fruit Shop Mid Valley Megamal",
+      "status": "completed",
+      "date": "4-06-24 20.00",
+      "amount": 60
+    },
+    {
+      "id": "RSQ0051",
+      "buyer": "Mohd Zulfiqar",
+      "merchant": "MBG Fruit Shop Mid Valley Megamal",
+      "status": "completed",
+      "date": "4-06-24 20.00",
+      "amount": 60
+    },
+    {
+      "id": "RSQ0050",
+      "buyer": "Aida Nordin",
+      "merchant": "E mart Mid Valley Megamal",
+      "status": "completed",
+      "date": "4-06-24 21.00",
+      "amount": 70
+    },
+    {
+      "id": "RSQ0049",
+      "buyer": "Tan Jia Wei",
+      "merchant": "Kedai kopi Malaya Megamal",
+      "status": "pending",
+      "date": "4-06-24 21.00",
+      "amount": 38
+    },
+    {
+      "id": "RSQ0048",
+      "buyer": "Zainab Ali",
+      "merchant": "Oriental Kopi Mid Valley Megamal",
+      "status": "completed",
+      "date": "4-06-24 21.00",
+      "amount": 55
+    },
+    {
+      "id": "RSQ0047",
+      "buyer": "Ahmad Shahrul",
+      "merchant": "MBG Fruit Shop Mid Valley Megamal",
+      "status": "cancel",
+      "date": "4-06-24 21.00",
+      "amount": 22
+    },
+    {
+      "id": "RSQ0046",
+      "buyer": "Leila Zafran",
+      "merchant": "E mart Mid Valley Megamal",
+      "status": "waitpickup",
+      "date": "4-06-24 21.00",
+      "amount": 43
+    },
+    {
+      "id": "RSQ0045",
+      "buyer": "Jamaluddin",
+      "merchant": "Kedai kopi Malaya Megamal",
+      "status": "refund",
+      "date": "4-06-24 21.00",
+      "amount": 18
+    },
+    {
+      "id": "RSQ0044",
+      "buyer": "Siti Hajar",
+      "merchant": "Oriental Kopi Mid Valley Megamal",
+      "status": "completed",
+      "date": "4-06-24 21.00",
+      "amount": 50
+    },
+    {
+      "id": "RSQ0043",
+      "buyer": "Puan Noraini",
+      "merchant": "MBG Fruit Shop Mid Valley Megamal",
+      "status": "nopickup",
+      "date": "4-06-24 21.00",
+      "amount": 30
+    },
+    {
+      "id": "RSQ0042",
+      "buyer": "Fayez Azzam",
+      "merchant": "E mart Mid Valley Megamal",
+      "status": "preparing",
+      "date": "4-06-24 21.00",
+      "amount": 50
+    },
+    {
+      "id": "RSQ0041",
+      "buyer": "Kamal Arif",
+      "merchant": "Kedai kopi Malaya Megamal",
+      "status": "completed",
+      "date": "4-06-24 21.00",
+      "amount": 45
+    },
+    {
+      "id": "RSQ0040",
+      "buyer": "Hafiz Shah",
+      "merchant": "Oriental Kopi Mid Valley Megamal",
+      "status": "refund",
+      "date": "4-06-24 21.00",
+      "amount": 20
+    },
+    {
+      "id": "RSQ0039",
+      "buyer": "Nadirah Rashid",
+      "merchant": "MBG Fruit Shop Mid Valley Megamal",
+      "status": "cancel",
+      "date": "4-06-24 21.00",
+      "amount": 15
+    },
+    {
+      "id": "RSQ0038",
+      "buyer": "Fikri Harith",
+      "merchant": "E mart Mid Valley Megamal",
+      "status": "completed",
+      "date": "4-06-24 21.00",
+      "amount": 65
+    },
+    {
+      "id": "RSQ0037",
+      "buyer": "Liyana Zulkifli",
+      "merchant": "Kedai kopi Malaya Megamal",
+      "status": "pending",
+      "date": "4-06-24 21.00",
+      "amount": 39
+    },
+    {
+      "id": "RSQ0036",
+      "buyer": "Rizal Nizam",
+      "merchant": "Oriental Kopi Mid Valley Megamal",
+      "status": "waitpickup",
+      "date": "4-06-24 21.00",
+      "amount": 27
+    },
+    {
+      "id": "RSQ0035",
+      "buyer": "Shamira Hasan",
+      "merchant": "MBG Fruit Shop Mid Valley Megamal",
+      "status": "completed",
+      "date": "4-06-24 21.00",
+      "amount": 55
+    },
+    {
+      "id": "RSQ0034",
+      "buyer": "Syafiqah Ibrahim",
+      "merchant": "E mart Mid Valley Megamal",
+      "status": "refund",
+      "date": "4-06-24 21.00",
+      "amount": 30
+    }
+  ]
+}

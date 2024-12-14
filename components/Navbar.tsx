@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { Input } from '@/components/ui/input'
+import { Search } from "lucide-react";
 import Link from "next/link";
 
 interface NavLink {
@@ -41,7 +43,13 @@ export default function Navbar() {
         ))}
       </ul>
       <div className="flex w-full gap-2">
-        <input type="text" className="px-3 py-2 w-full rounded-xl" placeholder="Search..." />
+        <Input
+          id="search"
+          type="text"
+          className="bg-white rounded-md"
+          placeholder="Search..."
+          icon={<Search />}
+        />
         <div
           className="w-10 h-10 aspect-square bg-white rounded-full flex items-center justify-center"
         >

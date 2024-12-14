@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useCallback } from "react"
 
 import {
   ColumnDef,
@@ -78,7 +78,19 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
-  const [goToPage, setGoToPage] = useState(5)
+
+  const fetchOrderDetails = useCallback(async (orderId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/order_details/${orderId}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error fetching order details:', error);
+    }
+  }, []);
 
   const table = useReactTable({
     data,
@@ -170,7 +182,10 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  onClick={() => fetchOrderDetails(row.getAllCells().find((cell) => cell.column.id === 'id')?.getValue() as string)}
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {cell.column.id === "status" ? (

@@ -1,7 +1,8 @@
 import { Order, columns } from "@/app/orders/columns";
 import { DataTable } from "@/app/orders/data-table";
+import Link from "next/link";
 
-async function getData(): Promise<Order[]> {
+export async function getData(): Promise<Order[]> {
   const response = await fetch('http://localhost:8000/orders');
   
   if (!response.ok) {
@@ -17,7 +18,12 @@ export default async function Orders() {
 
   return (
     <div className="container mx-auto">
+      <div className="flex gap-4 mb-4 text-gray-500">
+        <Link href="/dashboard">Dashboard</Link>
+        <div className="font-bold text-black border-b-2 border-black">Sales Orders</div>
+      </div>
       <DataTable columns={columns} data={data} />
     </div>
-  );
+);
 }
+ 

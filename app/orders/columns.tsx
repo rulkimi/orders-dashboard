@@ -89,6 +89,7 @@ export const columns: ColumnDef<Order>[] = [
     },
   },
   {
+    id: "date",
     accessorKey: "date",
     header: ({ column }) => {
       return (

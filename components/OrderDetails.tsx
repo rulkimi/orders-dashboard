@@ -16,7 +16,8 @@ export interface OrderDetailsProps {
     subtotal: number
     service_tax: number
     voucher_applied: number
-  }
+  },
+  tableHeight: number
 }
 
 export type OrderDetailsType = OrderDetailsProps["details"]
@@ -28,9 +29,12 @@ const formatPrice = (price: number) => {
   }).format(price)
 }
 
-export default function OrderDetails({ onClose, details }: OrderDetailsProps) {
+export default function OrderDetails({ onClose, details, tableHeight }: OrderDetailsProps) {
   return (
-    <div className="p-2 flex flex-col">
+    <div
+      className="px-2 pt-2 flex flex-col overflow-y-auto"
+      style={{maxHeight: tableHeight + 80 + 'px'}}
+    >
       <div className="text-end">
         <Button
           variant="outline"

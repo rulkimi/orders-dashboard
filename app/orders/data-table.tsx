@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useRef, useEffect } from "react"
 import OrderDetails, { OrderDetailsType } from "@/components/OrderDetails"
 
 import {
@@ -93,7 +93,17 @@ export function DataTable<TData, TValue>({
     service_tax: 0,
     voucher_applied: 0
   });
-  
+  const tableRef = useRef(null)
+  let [tableHeight, setTableHeight] = useState(0)
+
+  useEffect(() => {
+    if (!tableRef.current) return;
+    const tableElement = tableRef.current as HTMLElement;
+    if (tableElement) {
+      setTableHeight(tableElement.clientHeight);
+    }
+  }, []);
+
   const fetchOrderDetails = useCallback(async (orderId: string) => {
     try {
       const response = await fetch(`http://localhost:8000/order_details/${orderId}`);
@@ -134,7 +144,7 @@ export function DataTable<TData, TValue>({
   return (
     <div>
       <div className="rounded-md border flex">
-        <Table>
+        <Table ref={tableRef}>
           <TableHeader>
             <TableRow>
               <TableHead colSpan={columns.length}>
@@ -252,7 +262,7 @@ export function DataTable<TData, TValue>({
         </Table>
         {(showOrderDetails && !isDashboard) && (
           <div className="border-l w-2/4">
-            <OrderDetails details={orderDetails} onClose={() => setShowOrderDetails(false)}/>
+            <OrderDetails details={orderDetails} onClose={() => setShowOrderDetails(false)} tableHeight={tableHeight}/>
           </div>
         )}
       </div>

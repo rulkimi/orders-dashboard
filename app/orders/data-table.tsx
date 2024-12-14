@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
+import OrderDetail from "@/components/OrderDetails"
 
 import {
   ColumnDef,
@@ -78,6 +79,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
+  const [showOrderDetails, setShowOrderDetails] = useState(false)
 
   const fetchOrderDetails = useCallback(async (orderId: string) => {
     try {
@@ -87,6 +89,7 @@ export function DataTable<TData, TValue>({
       }
       const data = await response.json();
       console.log(data);
+      setShowOrderDetails(true)
     } catch (error) {
       console.error('Error fetching order details:', error);
     }
@@ -113,7 +116,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="rounded-md border">
+      <div className="rounded-md border flex">
         <Table>
           <TableHeader>
             <TableRow>
@@ -219,6 +222,11 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+        {showOrderDetails && (
+          <div className="border-l w-2/4">
+            <OrderDetail onClose={() => setShowOrderDetails(false)}/>
+          </div>
+        )}
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <label htmlFor="rowsPerPage" className="text-sm">

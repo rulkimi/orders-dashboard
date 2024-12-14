@@ -1,4 +1,5 @@
 import { Button } from "./ui/button"
+import { Image } from "lucide-react"
 
 export interface OrderDetailsProps {
   onClose: () => void
@@ -59,13 +60,16 @@ export default function OrderDetails({ onClose, details }: OrderDetailsProps) {
               <div>
                 {item.amount}x
               </div>
-              <div className="flex flex-col w-full">
-                <div>
-                  {item.name}
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">{item.expiry} from expiry date</span>
-                  <span>{formatPrice(item.price)}</span>
+              <div className="flex items-center gap-2">
+                <Image className="text-gray-400" size={80}/>
+                <div className="flex flex-col w-full">
+                  <div>
+                    {item.name}
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-500">{item.expiry} from expiry date</span>
+                    <span>{formatPrice(item.price)}</span>
+                  </div>
                 </div>
               </div>
             </div>

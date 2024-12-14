@@ -58,7 +58,12 @@ const deleteOrder = async (orderId: string) => {
 export const columns: ColumnDef<Order>[] = [
   {
     accessorKey: "id",
-    header: "Order ID"
+    header: "Order ID",
+    cell: ({ row }) => {
+      return (
+        <span className="font-bold">{row.original.id}</span>
+      )
+    }
   },
   {
     accessorKey: "buyer",

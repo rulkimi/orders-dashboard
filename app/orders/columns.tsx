@@ -21,6 +21,7 @@ import {
   DialogHeader,
   DialogContent,
   DialogFooter,
+  DialogClose
 } from '@/components/ui/dialog'
 import { DialogDescription } from "@radix-ui/react-dialog"
 
@@ -155,6 +156,9 @@ export const columns: ColumnDef<Order>[] = [
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
+                  <DialogClose asChild>
+                    <Button variant="secondary">Cancel</Button>
+                  </DialogClose>
                   <Button variant="destructive" onClick={() => deleteOrder(row.original.id)}>Delete</Button>
                 </DialogFooter>
               </DialogContent>

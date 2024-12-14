@@ -14,6 +14,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+import {
+  Dialog,
+  DialogTrigger,
+  DialogTitle,
+  DialogHeader,
+  DialogContent,
+  DialogFooter,
+} from '@/components/ui/dialog'
+import { DialogDescription } from "@radix-ui/react-dialog"
+
 export type Order = {
   id: string
   buyer: string
@@ -24,6 +34,25 @@ export type Order = {
 }
 
 export type OrderStatus = Order["status"]
+
+const deleteOrder = async (orderId: string) => {
+  try {
+    const response = await fetch(`http://localhost:8000/orders/${orderId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete order with ID ${orderId}. Status: ${response.status}`);
+    }
+
+    console.log(`Order with ID ${orderId} deleted successfully.`);
+    return await response.json();
+  } catch (error: any) {
+    console.error(`Error deleting order with ID ${orderId}:`, error.message);
+    throw error;
+  }
+};
+
 
 export const columns: ColumnDef<Order>[] = [
   {
@@ -93,8 +122,7 @@ export const columns: ColumnDef<Order>[] = [
     id: "actions",
     header: "More",
     cell: ({ row }) => {
-      const payment = row.original
- 
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -109,7 +137,28 @@ export const columns: ColumnDef<Order>[] = [
             <DropdownMenuItem>View Transaction</DropdownMenuItem>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-500">Delete this Order</DropdownMenuItem>
+            <Dialog>
+              <DialogTrigger className="w-full">
+                <DropdownMenuItem
+                  className="text-red-500"
+                  onSelect={(e) => e.preventDefault()}
+                  onClick={() => console.log(row.original.id)}
+                >
+                  Delete this Order
+                </DropdownMenuItem>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Delete Order</DialogTitle>
+                  <DialogDescription>
+                    This will delete the order.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button variant="destructive" onClick={() => deleteOrder(row.original.id)}>Delete</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </DropdownMenuContent>
         </DropdownMenu>
       )

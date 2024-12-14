@@ -243,303 +243,458 @@
     {
       "id": "RSQ0060",
       "items": [
-        {"name": "Mixed Fruits 50% discount", "price": 7.50, "expiry": "3 days", "amount": 1},
-        {"name": "Blended Juice Bottle random fruits 50% discount", "price": 12.50, "expiry": "3 days", "amount": 1},
-        {"name": "Surprise Bag", "price": 29.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Mixed Fruits 50% discount",
+          "price": 7.5,
+          "expiry": "3 days",
+          "amount": 1
+        },
+        {
+          "name": "Blended Juice Bottle random fruits 50% discount",
+          "price": 12.5,
+          "expiry": "3 days",
+          "amount": 1
+        },
+        {
+          "name": "Surprise Bag",
+          "price": 29,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "FPX (Online Banking)",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 49.00,
+      "subtotal": 49,
       "service_tax": 0.73,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0059",
       "items": [
-        {"name": "Groceries Package A", "price": 30.00, "expiry": "3 days", "amount": 1},
-        {"name": "Vegetable Combo Pack", "price": 15.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Groceries Package A",
+          "price": 30,
+          "expiry": "3 days",
+          "amount": 1
+        },
+        {
+          "name": "Vegetable Combo Pack",
+          "price": 15,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Credit Card",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 45.00,
+      "subtotal": 45,
       "service_tax": 0.68,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0058",
       "items": [
-        {"name": "Coffee Beans Premium", "price": 30.00, "expiry": "7 days", "amount": 1}
+        {
+          "name": "Coffee Beans Premium",
+          "price": 30,
+          "expiry": "7 days",
+          "amount": 1
+        }
       ],
       "payment_method": "E-wallet",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 30.00,
+      "subtotal": 30,
       "service_tax": 0.45,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0057",
       "items": [
-        {"name": "Herbal Tea", "price": 20.00, "expiry": "7 days", "amount": 1}
+        {
+          "name": "Herbal Tea",
+          "price": 20,
+          "expiry": "7 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Cash",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 20.00,
-      "service_tax": 0.30,
-      "voucher_applied": 0.00
+      "subtotal": 20,
+      "service_tax": 0.3,
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0056",
       "items": [
-        {"name": "Mixed Fruits 50% discount", "price": 15.00, "expiry": "3 days", "amount": 1},
-        {"name": "Surprise Bag", "price": 20.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Mixed Fruits 50% discount",
+          "price": 15,
+          "expiry": "3 days",
+          "amount": 1
+        },
+        {
+          "name": "Surprise Bag",
+          "price": 20,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "FPX (Online Banking)",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 35.00,
+      "subtotal": 35,
       "service_tax": 0.53,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0055",
       "items": [
-        {"name": "Household Essentials", "price": 25.00, "expiry": "7 days", "amount": 1}
+        {
+          "name": "Household Essentials",
+          "price": 25,
+          "expiry": "7 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Credit Card",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 25.00,
+      "subtotal": 25,
       "service_tax": 0.38,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0054",
       "items": [
-        {"name": "Traditional Snacks", "price": 40.00, "expiry": "5 days", "amount": 1}
+        {
+          "name": "Traditional Snacks",
+          "price": 40,
+          "expiry": "5 days",
+          "amount": 1
+        }
       ],
       "payment_method": "E-wallet",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 40.00,
-      "service_tax": 0.60,
-      "voucher_applied": 0.00
+      "subtotal": 40,
+      "service_tax": 0.6,
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0053",
       "items": [
-        {"name": "Noodle Set Meal", "price": 15.00, "expiry": "2 days", "amount": 1}
+        {
+          "name": "Noodle Set Meal",
+          "price": 15,
+          "expiry": "2 days",
+          "amount": 1
+        }
       ],
       "payment_method": "FPX (Online Banking)",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 15.00,
+      "subtotal": 15,
       "service_tax": 0.23,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0052",
       "items": [
-        {"name": "Tropical Fruit Basket", "price": 60.00, "expiry": "5 days", "amount": 1}
+        {
+          "name": "Tropical Fruit Basket",
+          "price": 60,
+          "expiry": "5 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Credit Card",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 60.00,
-      "service_tax": 0.90,
-      "voucher_applied": 0.00
+      "subtotal": 60,
+      "service_tax": 0.9,
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0051",
       "items": [
-        {"name": "Tropical Fruit Basket", "price": 60.00, "expiry": "5 days", "amount": 1}
+        {
+          "name": "Tropical Fruit Basket",
+          "price": 60,
+          "expiry": "5 days",
+          "amount": 1
+        }
       ],
       "payment_method": "E-wallet",
       "pickup_time": "4-06-24 20.00",
-      "subtotal": 60.00,
-      "service_tax": 0.90,
-      "voucher_applied": 0.00
+      "subtotal": 60,
+      "service_tax": 0.9,
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0050",
       "items": [
-        {"name": "Weekly Groceries", "price": 70.00, "expiry": "7 days", "amount": 1}
+        {
+          "name": "Weekly Groceries",
+          "price": 70,
+          "expiry": "7 days",
+          "amount": 1
+        }
       ],
       "payment_method": "FPX (Online Banking)",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 70.00,
+      "subtotal": 70,
       "service_tax": 1.05,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0049",
       "items": [
-        {"name": "Fresh Fruits Box", "price": 38.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Fresh Fruits Box",
+          "price": 38,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Credit Card",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 38.00,
-        "service_tax": 0.57,
-        "voucher_applied": 0.00
+      "subtotal": 38,
+      "service_tax": 0.57,
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0048",
       "items": [
-        {"name": "Coffee Set", "price": 55.00, "expiry": "7 days", "amount": 1}
+        {
+          "name": "Coffee Set",
+          "price": 55,
+          "expiry": "7 days",
+          "amount": 1
+        }
       ],
       "payment_method": "E-wallet",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 55.00,
+      "subtotal": 55,
       "service_tax": 0.83,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0047",
       "items": [
-        {"name": "Asian Snack Combo", "price": 22.00, "expiry": "5 days", "amount": 1}
+        {
+          "name": "Asian Snack Combo",
+          "price": 22,
+          "expiry": "5 days",
+          "amount": 1
+        }
       ],
       "payment_method": "FPX (Online Banking)",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 22.00,
+      "subtotal": 22,
       "service_tax": 0.33,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0046",
       "items": [
-        {"name": "Grocery Essentials", "price": 43.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Grocery Essentials",
+          "price": 43,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Credit Card",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 43.00,
+      "subtotal": 43,
       "service_tax": 0.65,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0045",
       "items": [
-        {"name": "Coffee Bean Pack", "price": 18.00, "expiry": "5 days", "amount": 1}
+        {
+          "name": "Coffee Bean Pack",
+          "price": 18,
+          "expiry": "5 days",
+          "amount": 1
+        }
       ],
       "payment_method": "E-wallet",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 18.00,
+      "subtotal": 18,
       "service_tax": 0.27,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0044",
       "items": [
-        {"name": "Kopi O Package", "price": 50.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Kopi O Package",
+          "price": 50,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "FPX (Online Banking)",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 50.00,
+      "subtotal": 50,
       "service_tax": 0.75,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0043",
       "items": [
-        {"name": "Fruit Basket", "price": 30.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Fruit Basket",
+          "price": 30,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Credit Card",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 30.00,
+      "subtotal": 30,
       "service_tax": 0.45,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0042",
       "items": [
-        {"name": "Vegetable Basket", "price": 50.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Vegetable Basket",
+          "price": 50,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "E-wallet",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 50.00,
+      "subtotal": 50,
       "service_tax": 0.75,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0041",
       "items": [
-        {"name": "Tea Time Combo", "price": 45.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Tea Time Combo",
+          "price": 45,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "FPX (Online Banking)",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 45.00,
+      "subtotal": 45,
       "service_tax": 0.68,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0040",
       "items": [
-        {"name": "Premium Coffee Beans", "price": 20.00, "expiry": "7 days", "amount": 1}
+        {
+          "name": "Premium Coffee Beans",
+          "price": 20,
+          "expiry": "7 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Credit Card",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 20.00,
-      "service_tax": 0.30,
-      "voucher_applied": 0.00
+      "subtotal": 20,
+      "service_tax": 0.3,
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0039",
       "items": [
-        {"name": "Snack Combo", "price": 15.00, "expiry": "7 days", "amount": 1}
+        {
+          "name": "Snack Combo",
+          "price": 15,
+          "expiry": "7 days",
+          "amount": 1
+        }
       ],
       "payment_method": "E-wallet",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 15.00,
+      "subtotal": 15,
       "service_tax": 0.23,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0038",
       "items": [
-        {"name": "Grocery Set", "price": 65.00, "expiry": "5 days", "amount": 1}
+        {
+          "name": "Grocery Set",
+          "price": 65,
+          "expiry": "5 days",
+          "amount": 1
+        }
       ],
       "payment_method": "FPX (Online Banking)",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 65.00,
+      "subtotal": 65,
       "service_tax": 0.98,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0037",
       "items": [
-        {"name": "Fruit Basket", "price": 39.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Fruit Basket",
+          "price": 39,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Credit Card",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 39.00,
+      "subtotal": 39,
       "service_tax": 0.59,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0036",
       "items": [
-        {"name": "Mixed Tea", "price": 27.00, "expiry": "5 days", "amount": 1}
+        {
+          "name": "Mixed Tea",
+          "price": 27,
+          "expiry": "5 days",
+          "amount": 1
+        }
       ],
       "payment_method": "E-wallet",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 27.00,
+      "subtotal": 27,
       "service_tax": 0.41,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0035",
       "items": [
-        {"name": "Fruit Basket", "price": 55.00, "expiry": "3 days", "amount": 1}
+        {
+          "name": "Fruit Basket",
+          "price": 55,
+          "expiry": "3 days",
+          "amount": 1
+        }
       ],
       "payment_method": "FPX (Online Banking)",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 55.00,
+      "subtotal": 55,
       "service_tax": 0.83,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     },
     {
       "id": "RSQ0034",
       "items": [
-        {"name": "Household Pack", "price": 30.00, "expiry": "7 days", "amount": 1}
+        {
+          "name": "Household Pack",
+          "price": 30,
+          "expiry": "7 days",
+          "amount": 1
+        }
       ],
       "payment_method": "Credit Card",
       "pickup_time": "4-06-24 21.00",
-      "subtotal": 30.00,
+      "subtotal": 30,
       "service_tax": 0.45,
-      "voucher_applied": 0.00
+      "voucher_applied": 0
     }
   ]
 }

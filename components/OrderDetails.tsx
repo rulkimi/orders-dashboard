@@ -57,7 +57,7 @@ export default function OrderDetails({ onClose, details }: OrderDetailsProps) {
               key={item.name}
               className={`flex gap-4 py-5 ${index + 1 !== details.items.length ? 'border-b' : ''}`}
             >
-              <div>
+              <div className="flex items-center">
                 {item.amount}x
               </div>
               <div className="flex items-center gap-2">

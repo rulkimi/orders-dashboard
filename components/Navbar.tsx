@@ -24,7 +24,7 @@ export default function Navbar() {
   const [activeMenu, setActiveMenu] = useState("Dashboard");
 
   return (
-    <div className="sticky top-0 bg-neutral-800 p-6 flex gap-12 justify-between">
+    <div className="sticky top-0 z-20 bg-neutral-800 p-6 flex gap-12 justify-between">
       <ul className="flex gap-6">
         {navMenus.map((menu, index) => (
           <li key={index} className="flex items-center">

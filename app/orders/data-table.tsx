@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import OrderDetail from "@/components/OrderDetails"
+import OrderDetails, { OrderDetailsType } from "@/components/OrderDetails"
 
 import {
   ColumnDef,
@@ -80,7 +80,16 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
   const [showOrderDetails, setShowOrderDetails] = useState(false)
-
+  const [orderDetails, setOrderDetails] = useState<OrderDetailsType>({
+    id: '',
+    items: [{ name: '', price: 0, expiry: '', amount: 0}],
+    payment_method: '',
+    pickup_time: '',
+    subtotal: 0,
+    service_tax: 0,
+    voucher_applied: 0
+  });
+  
   const fetchOrderDetails = useCallback(async (orderId: string) => {
     try {
       const response = await fetch(`http://localhost:8000/order_details/${orderId}`);
@@ -88,7 +97,7 @@ export function DataTable<TData, TValue>({
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
+      setOrderDetails(data)
       setShowOrderDetails(true)
     } catch (error) {
       console.error('Error fetching order details:', error);
@@ -224,7 +233,7 @@ export function DataTable<TData, TValue>({
         </Table>
         {showOrderDetails && (
           <div className="border-l w-2/4">
-            <OrderDetail onClose={() => setShowOrderDetails(false)}/>
+            <OrderDetails details={orderDetails} onClose={() => setShowOrderDetails(false)}/>
           </div>
         )}
       </div>

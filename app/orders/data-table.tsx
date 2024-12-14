@@ -206,7 +206,7 @@ export function DataTable<TData, TValue>({
                           const { styleClass, text } = getStatusStyles(value);
                           return (
                             <div className="flex justify-center">
-                              <span className={`${styleClass} px-3 py-1 rounded-full`}>
+                              <span className={`${styleClass} px-3 py-1 rounded-full text-nowrap`}>
                                 {text}
                               </span>
                             </div>

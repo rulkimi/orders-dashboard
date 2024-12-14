@@ -250,7 +250,7 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-        {showOrderDetails && (
+        {(showOrderDetails && !isDashboard) && (
           <div className="border-l w-2/4">
             <OrderDetails details={orderDetails} onClose={() => setShowOrderDetails(false)}/>
           </div>

@@ -60,6 +60,10 @@ import {
   ChevronsLeft 
 } from "lucide-react"
 
+interface BaseRow {
+  id: string
+}
+
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
@@ -109,7 +113,7 @@ const deleteOrder = async (orderId: string) => {
   }
 };
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends BaseRow, TValue>({
   columns,
   data,
   isDashboard
@@ -118,6 +122,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
+  const [activeOrderId, setActiveOrderId] = useState<string>()
   const [showOrderDetails, setShowOrderDetails] = useState(false)
   const [orderDetails, setOrderDetails] = useState<OrderDetailsType>({
     id: '',
@@ -146,6 +151,7 @@ export function DataTable<TData, TValue>({
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
+      setActiveOrderId(orderId)
       setOrderDetails(data)
       setShowOrderDetails(true)
     } catch (error) {
@@ -258,7 +264,7 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} className={activeOrderId === row.original.id ? 'bg-slate-100/50' : ''}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {cell.column.id === "status" ? (

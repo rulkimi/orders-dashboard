@@ -33,7 +33,7 @@ export default function OrderDetails({ onClose, details, tableHeight }: OrderDet
   return (
     <div
       className="px-2 pt-2 mb-2 flex flex-col overflow-y-auto"
-      style={{maxHeight: tableHeight + 'px'}}
+      style={{maxHeight: tableHeight - 7.5 + 'px'}}
     >
       <div className="text-end">
         <Button

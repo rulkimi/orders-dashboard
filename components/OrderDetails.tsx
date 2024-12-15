@@ -32,8 +32,8 @@ const formatPrice = (price: number) => {
 export default function OrderDetails({ onClose, details, tableHeight }: OrderDetailsProps) {
   return (
     <div
-      className="px-2 pt-2 flex flex-col overflow-y-auto"
-      style={{maxHeight: tableHeight + 80 + 'px'}}
+      className="px-2 pt-2 mb-2 flex flex-col overflow-y-auto"
+      style={{maxHeight: tableHeight + 'px'}}
     >
       <div className="text-end">
         <Button

@@ -3,6 +3,7 @@ import { DashboardCardItem } from "@/components/DashboardCard"
 import { Order, columns } from "@/app/orders/columns";
 import { DataTable } from "@/app/orders/data-table";
 import { getData } from "../orders/page";
+import FakeChart from "./fake-chart";
 
 async function getInfo(): Promise<DashboardCardItem[]> {
   const response = await fetch('http://localhost:8000/info')
@@ -30,7 +31,7 @@ export default async function Dashboard() {
       </ul>
       <div className="flex gap-4">
         <div className="w-1/2">
-          {/* <DataTable columns={columns} data={tableData} isDashboard /> */}
+          <FakeChart />
         </div>
         <div className="w-1/2">
           <DataTable columns={columns} data={tableData} isDashboard />

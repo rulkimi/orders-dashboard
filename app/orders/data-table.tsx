@@ -97,47 +97,6 @@ const getStatusStyles = (status: OrderStatus) => {
   }
 };
 
-const deleteOrder = async (orderId: string) => {
-  try {
-    const response = await fetch(`http://localhost:8000/orders/${orderId}`, {
-      method: 'DELETE',
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to delete order with ID ${orderId}. Status: ${response.status}`);
-    }
-
-    console.log(`Order with ID ${orderId} deleted successfully.`);
-    return await response.json();
-  } catch (error: any) {
-    console.error(`Error deleting order with ID ${orderId}:`, error.message);
-    throw error;
-  }
-};
-
-const updateOrderStatus = async (orderId: string, newStatus: string) => {
-  try {
-    const response = await fetch(`http://localhost:8000/orders/${orderId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status: newStatus }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to update order with ID ${orderId}. Status: ${response.status}`);
-    }
-
-    const updatedOrder = await response.json();
-    console.log(`Order with ID ${orderId} updated successfully.`, updatedOrder);
-    return updatedOrder;
-  } catch (error: any) {
-    console.error(`Error updating order with ID ${orderId}:`, error.message);
-    throw error;
-  }
-};
-
 const OrderStatuses: OrderStatus[] = [
   "preparing",
   "waitpickup",
@@ -153,6 +112,7 @@ export function DataTable<TData extends BaseRow, TValue>({
   data,
   isDashboard
 }: DataTableProps<TData, TValue>) {
+  const [newData, setData] = useState<TData[]>([]);
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -173,14 +133,18 @@ export function DataTable<TData extends BaseRow, TValue>({
   const [goToPageValue, setGoToPageValue] = useState('5')
 
   useEffect(() => {
+    setData(data)
+  }, []);
+
+  useEffect(() => {
     if (!tableRef.current) return;
     const tableElement = tableRef.current as HTMLElement;
     if (tableElement) {
       setTableHeight(tableElement.clientHeight);
     }
-  }, []);
+  }, [newData])
 
-  const fetchOrderDetails = useCallback(async (orderId: string) => {
+  const fetchOrderDetails = async (orderId: string) => {
     try {
       const response = await fetch(`http://localhost:8000/order_details/${orderId}`);
       if (!response.ok) {
@@ -193,10 +157,57 @@ export function DataTable<TData extends BaseRow, TValue>({
     } catch (error) {
       console.error('Error fetching order details:', error);
     }
-  }, []);
+  };
+
+  const deleteOrder = async (orderId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/orders/${orderId}`, {
+        method: 'DELETE',
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to delete order with ID ${orderId}. Status: ${response.status}`);
+      }
+  
+      console.log(`Order with ID ${orderId} deleted successfully.`);
+      // Update the state after deleting
+      setData(prevData => prevData.filter(order => order.id !== orderId));  // Remove the deleted order
+    } catch (error: any) {
+      console.error(`Error deleting order with ID ${orderId}:`, error.message);
+      throw error;
+    }
+  };
+  
+  
+  const updateOrderStatus = async (orderId: string, newStatus: string) => {
+    try {
+      const response = await fetch(`http://localhost:8000/orders/${orderId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to update order with ID ${orderId}. Status: ${response.status}`);
+      }
+  
+      const updatedOrder = await response.json();
+      console.log(`Order with ID ${orderId} updated successfully.`, updatedOrder);
+  
+      // Update the state after the status change
+      setData(prevData => prevData.map(order => 
+        order.id === orderId ? { ...order, status: newStatus } : order
+      ));
+    } catch (error: any) {
+      console.error(`Error updating order with ID ${orderId}:`, error.message);
+      throw error;
+    }
+  };
 
   const table = useReactTable({
-    data,
+    data: newData ?? data,
     columns: columns
       .filter(column => !(isDashboard && (column.id === "actions" || column.id === "date")))
       .map((column) => ({
@@ -375,12 +386,14 @@ export function DataTable<TData extends BaseRow, TValue>({
                                   <DialogClose asChild>
                                     <Button variant="secondary">Cancel</Button>
                                   </DialogClose>
-                                  <Button
-                                    variant="destructive"
-                                    onClick={() => deleteOrder(row.getAllCells().find((cell) => cell.column.id === 'id')?.getValue() as string)}
-                                  >
-                                    Delete
-                                  </Button>
+                                  <DialogClose>
+                                    <Button
+                                      variant="destructive"
+                                      onClick={() => deleteOrder(row.getAllCells().find((cell) => cell.column.id === 'id')?.getValue() as string)}
+                                    >
+                                      Delete
+                                    </Button>
+                                  </DialogClose>
                                 </DialogFooter>
                               </DialogContent>
                             </Dialog>

@@ -87,7 +87,7 @@ const getStatusStyles = (status: OrderStatus) => {
     case "cancel":
       return { styleClass: "bg-gray-200", text: "Cancel" };
     case "pending":
-      return { styleClass: "bg-gray-200", text: "Cancel" };
+      return { styleClass: "bg-gray-200", text: "Pending" };
     case "refund":
       return { styleClass: "bg-gray-200", text: "Refund" };
     case "nopickup":

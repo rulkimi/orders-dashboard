@@ -25,8 +25,6 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from '@/components/ui/select';
-
 
 import { Input } from "@/components/ui/input"
 
@@ -363,7 +361,7 @@ export function DataTable<TData extends BaseRow, TValue>({
           </label>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline">
+              <Button size="sm" variant="outline">
                 {table.getState().pagination.pageSize}
               </Button>
             </DropdownMenuTrigger>
@@ -391,7 +389,7 @@ export function DataTable<TData extends BaseRow, TValue>({
             <Input
               id="go-to-page"
               type="number"
-              className="w-[50px] text-center inline-block ml-1"
+              className="w-[40px] text-center inline-block ml-1 h-[32px]"
               value={goToPageValue}
               onChange={(e) => setGoToPageValue(e.target.value)}
               onKeyDown={(event) => {

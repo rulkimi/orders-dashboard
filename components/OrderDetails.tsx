@@ -64,13 +64,13 @@ export default function OrderDetails({ onClose, details, tableHeight }: OrderDet
               <div className="flex items-center">
                 {item.amount}x
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex w-full items-center gap-2">
                 <Image className="text-gray-400" size={80}/>
                 <div className="flex flex-col w-full">
                   <div>
                     {item.name}
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex w-full justify-between">
                     <span className="text-gray-500">{item.expiry} from expiry date</span>
                     <span>{formatPrice(item.price)}</span>
                   </div>
@@ -90,10 +90,10 @@ export default function OrderDetails({ onClose, details, tableHeight }: OrderDet
           </div>
           <div className="py-2 flex justify-between">
             <span>Voucher applied</span>
-            <span>{formatPrice(details.voucher_applied)}</span>
+            <span>- {formatPrice(details.voucher_applied)}</span>
           </div>
         </div>
       </div>
     </div>
-  )
+  ) 
 }

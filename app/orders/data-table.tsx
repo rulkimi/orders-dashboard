@@ -28,7 +28,7 @@ import {
 
 import { Input } from "@/components/ui/input"
 
-import { MoreHorizontal } from "lucide-react"
+import { MoreHorizontal, EyeIcon, Trash2Icon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -58,7 +58,8 @@ import {
   ChevronRight, 
   ChevronsRight, 
   ChevronLeft, 
-  ChevronsLeft 
+  ChevronsLeft,
+  ChevronDown
 } from "lucide-react"
 
 interface BaseRow {
@@ -113,6 +114,39 @@ const deleteOrder = async (orderId: string) => {
     throw error;
   }
 };
+
+const updateOrderStatus = async (orderId: string, newStatus: string) => {
+  try {
+    const response = await fetch(`http://localhost:8000/orders/${orderId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: newStatus }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to update order with ID ${orderId}. Status: ${response.status}`);
+    }
+
+    const updatedOrder = await response.json();
+    console.log(`Order with ID ${orderId} updated successfully.`, updatedOrder);
+    return updatedOrder;
+  } catch (error: any) {
+    console.error(`Error updating order with ID ${orderId}:`, error.message);
+    throw error;
+  }
+};
+
+const OrderStatuses: OrderStatus[] = [
+  "preparing",
+  "waitpickup",
+  "completed",
+  "cancel",
+  "pending",
+  "refund",
+  "nopickup",
+];
 
 export function DataTable<TData extends BaseRow, TValue>({
   columns,
@@ -275,9 +309,26 @@ export function DataTable<TData extends BaseRow, TValue>({
                           const { styleClass, text } = getStatusStyles(value);
                           return (
                             <div className="flex justify-center">
-                              <span className={`${styleClass} px-3 py-1 rounded-full text-nowrap`}>
-                                {text}
-                              </span>
+                              <DropdownMenu>
+                                <DropdownMenuTrigger>
+                                  <span className={`${styleClass} px-3 py-1 rounded-full text-nowrap flex items-center`}>
+                                    {text}
+                                    <ChevronDown className="inline-block ml-1" size={16} />
+                                  </span>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent>
+                                  <DropdownMenuLabel>Change Status</DropdownMenuLabel>
+                                  <DropdownMenuSeparator />
+                                  {OrderStatuses.map((status) => (
+                                    <DropdownMenuItem
+                                      key={status}
+                                      onClick={() => updateOrderStatus(row.original.id, status)}
+                                    >
+                                      {getStatusStyles(status).text}
+                                    </DropdownMenuItem>
+                                  ))}
+                                </DropdownMenuContent>
+                              </DropdownMenu>
                             </div>
                           );
                         })()
@@ -291,19 +342,25 @@ export function DataTable<TData extends BaseRow, TValue>({
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem
+                              className="group"
                               onClick={() => fetchOrderDetails(row.getAllCells().find((cell) => cell.column.id === 'id')?.getValue() as string)}
                             >
+                              <EyeIcon className="group-hover:visible invisible" />
                               View Sales Order Details
                             </DropdownMenuItem>
-                            <DropdownMenuItem>View Transaction</DropdownMenuItem>
+                            <DropdownMenuItem className="group">
+                              <EyeIcon className="group-hover:visible invisible" />
+                              View Transaction
+                            </DropdownMenuItem>
                 
                             <DropdownMenuSeparator />
                             <Dialog>
                               <DialogTrigger className="w-full">
                                 <DropdownMenuItem
-                                  className="text-red-500"
+                                  className="text-red-500 group"
                                   onSelect={(e) => e.preventDefault()}
                                 >
+                                  <Trash2Icon className="group-hover:visible invisible" />
                                   Delete this Order
                                 </DropdownMenuItem>
                               </DialogTrigger>

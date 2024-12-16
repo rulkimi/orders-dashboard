@@ -318,7 +318,7 @@ export function DataTable<TData extends BaseRow, TValue>({
                         (() => {
                           const value = cell.getValue() as OrderStatus;
                           const { styleClass, text } = getStatusStyles(value);
-                          return (
+                          return !isDashboard ? (
                             <div className="flex justify-center">
                               <DropdownMenu>
                                 <DropdownMenuTrigger>
@@ -341,7 +341,13 @@ export function DataTable<TData extends BaseRow, TValue>({
                                 </DropdownMenuContent>
                               </DropdownMenu>
                             </div>
-                          );
+                          ) : (
+                            <div className="flex justify-center">
+                              <span className={`${styleClass} px-3 py-1 rounded-full text-nowrap flex items-center`}>
+                                {text}
+                              </span>
+                            </div>
+                          )
                         })()
                       ) : cell.column.id === "actions" ? (
                         <DropdownMenu>

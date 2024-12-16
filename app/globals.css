@@ -23,3 +23,17 @@ body {
     --radius: 0.5rem;
   }
 }
+
+/* For Chrome, Edge, Safari */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* For Firefox *//* Using vendor prefixes for compatibility */
+input[type="number"] {
+  -webkit-appearance: none; /* Chrome, Safari, Edge */
+  -moz-appearance: textfield; /* Firefox */
+  appearance: none; /* Standard */
+}

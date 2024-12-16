@@ -25,6 +25,9 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import { Select, SelectItem, SelectTrigger, SelectValue, SelectContent } from '@/components/ui/select';
+
+
 import { Input } from "@/components/ui/input"
 
 import { MoreHorizontal } from "lucide-react"
@@ -135,6 +138,7 @@ export function DataTable<TData extends BaseRow, TValue>({
   });
   const tableRef = useRef(null)
   let [tableHeight, setTableHeight] = useState(0)
+  const [goToPageValue, setGoToPageValue] = useState('5')
 
   useEffect(() => {
     if (!tableRef.current) return;
@@ -357,26 +361,50 @@ export function DataTable<TData extends BaseRow, TValue>({
           <label htmlFor="rowsPerPage" className="text-sm">
             Rows per page:
           </label>
-          <select
-            id="rowsPerPage"
-            className="text-sm border rounded"
-            value={table.getState().pagination.pageSize}
-            onChange={(e) => table.setPageSize(Number(e.target.value))}
-          >
-            {[10, 20, 30, 50, 100].map((pageSize) => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-          </select>
-          Page {table.getState().pagination.pageIndex + 1} of {Math.ceil(data.length / table.getState().pagination.pageSize)}
-          <Button
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                {table.getState().pagination.pageSize}
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              {[10, 20, 30, 50, 100].map((pageSize) => (
+                <DropdownMenuItem
+                  key={pageSize}
+                  onClick={() => table.setPageSize(Number(pageSize))}
+                >
+                  {pageSize}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* <Button
             variant="outline"
             size="sm"
             onClick={() => table.setPageIndex(1)}
           >
             Go To Page 2
-          </Button>
+          </Button> */}
+          <label>
+            Go to page
+            <Input
+              id="go-to-page"
+              type="number"
+              className="w-[50px] text-center inline-block ml-1"
+              value={goToPageValue}
+              onChange={(e) => setGoToPageValue(e.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  if (Number(goToPageValue) > Math.ceil(data.length / table.getState().pagination.pageSize)) return;
+                  table.setPageIndex(Number(goToPageValue) - 1);
+                }
+              }}
+            />
+          </label>
+          <div className="px-6">
+            Page {table.getState().pagination.pageIndex + 1} of {Math.ceil(data.length / table.getState().pagination.pageSize)}
+          </div>
           <Button
             variant="outline"
             size="sm"

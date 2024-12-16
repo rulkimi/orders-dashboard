@@ -356,14 +356,14 @@ export function DataTable<TData extends BaseRow, TValue>({
       </div>
       {!isDashboard && (
         <div className="flex items-center justify-end space-x-2 py-4">
-          <label htmlFor="rowsPerPage" className="text-sm">
-            Rows per page:
-          </label>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button size="sm" variant="outline">
-                {table.getState().pagination.pageSize}
-              </Button>
+              <label>
+                Rows per page:
+                <Button className="ml-2" size="sm" variant="outline">
+                  {table.getState().pagination.pageSize}
+                </Button>
+              </label>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               {[10, 20, 30, 50, 100].map((pageSize) => (

@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <div className="sticky top-0 z-20 bg-neutral-800 p-6 flex justify-between items-center">
       <div className="flex items-center gap-6">
-        <ul className="hidden md:flex gap-6">
+        <ul className="hidden lg:flex gap-6">
           {navMenus.map(({ title, link }) => (
             <li key={title} className="flex items-center">
               <Link
@@ -59,7 +59,7 @@ export default function Navbar() {
           ))}
         </ul>
         <button
-          className="md:hidden text-white"
+          className="lg:hidden text-white"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? (
@@ -90,7 +90,7 @@ export default function Navbar() {
       </div>
 
       {isMenuOpen && (
-        <ul className="absolute top-16 left-0 w-full bg-neutral-800 flex flex-col gap-4 p-6 md:hidden">
+        <ul className="absolute top-16 left-0 w-full bg-neutral-800 flex flex-col gap-4 p-6 lg:hidden">
           {navMenus.map(({ title, link }) => (
             <li key={title} className="flex items-center">
               <Link

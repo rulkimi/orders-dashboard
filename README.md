@@ -77,6 +77,7 @@ A brief overview of the project structure:
 
 - Make sure the `json-server` is running on port 8000 before starting the Next.js server to avoid port conflicts.
 - For any changes to the `db.json` file, restart the `json-server` to apply the updates.
+- Making changes to the table data, e.g., the status, order details, or deleting the data, will result in change for `db.json`, and git will detect the changes. 
 
 ## Dependencies
 

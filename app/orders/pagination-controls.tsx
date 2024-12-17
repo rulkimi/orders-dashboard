@@ -33,6 +33,7 @@ export const PaginationControls = ({ table, goToPageValue, setGoToPageValue, dat
       <label>
         Go to page
         <Input
+          id="go-to-page"
           type="number"
           className="w-[50px] text-center inline-block ml-1 h-[32px]"
           value={goToPageValue}

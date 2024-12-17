@@ -57,12 +57,12 @@ export default function Dashboard() {
         ))}
       </ul>
 
-      <div className="flex gap-4">
-        <div className="w-1/2">
+      <div className="flex flex-col lg:flex-row gap-4">
+        <div className="w-full h-[600px] lg:w-1/2">
           {isDataUpdated && renderFakeChart && <FakeChart />}
         </div>
 
-        <div className="w-1/2">
+        <div className="w-full lg:w-1/2">
           {isDataUpdated && <DataTable columns={columns} data={tableData} isDashboard />}
         </div>
       </div>

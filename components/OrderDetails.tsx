@@ -93,6 +93,9 @@ export default function OrderDetails({ onClose, details, tableHeight }: OrderDet
             <span>- {formatPrice(details.voucher_applied)}</span>
           </div>
         </div>
+        <div className="bg-gray-100 px-8 py-2 rounded-sm mt-6">
+          10% voucher applied
+        </div>
       </div>
     </div>
   ) 

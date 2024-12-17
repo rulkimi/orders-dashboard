@@ -205,7 +205,12 @@ export function DataTable<TData extends BaseRow, TValue>({ columns, data, isDash
 
         {showOrderDetails && !isDashboard && (
           <div className="border-l w-2/4">
-            <OrderDetails details={orderDetails} onClose={() => setShowOrderDetails(false)} tableHeight={tableHeight} />
+            <OrderDetails
+              details={orderDetails} 
+              tableHeight={tableHeight} 
+              setData={() => fetchOrderDetails(orderDetails.id)}
+              onClose={() => setShowOrderDetails(false)} 
+            />
           </div>
         )}
       </div>

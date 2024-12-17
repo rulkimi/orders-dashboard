@@ -1,5 +1,8 @@
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Image } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
 export interface OrderDetailsProps {
   onClose: () => void
@@ -17,7 +20,8 @@ export interface OrderDetailsProps {
     service_tax: number
     voucher_applied: number
   },
-  tableHeight: number
+  tableHeight: number,
+  setData: () => void
 }
 
 export type OrderDetailsType = OrderDetailsProps["details"]
@@ -29,8 +33,56 @@ const formatPrice = (price: number) => {
   }).format(price)
 }
 
-export default function OrderDetails({ onClose, details, tableHeight }: OrderDetailsProps) {
+export default function OrderDetails({ onClose, details, tableHeight, setData }: OrderDetailsProps) {
   const containerStyle = { maxHeight: tableHeight - 7.5 + 'px' }
+
+  const [isEditingPaymentMethod, setIsEditingPaymentMethod] = useState(false)
+  const [isEditingPickupTime, setIsEditingPickupTime] = useState(false)
+
+  const [newPaymentMethod, setNewPaymentMethod] = useState(details.payment_method)
+  const [newPickupTime, setNewPickupTime] = useState(details.pickup_time)
+
+  const { toast } = useToast()
+
+  const handleSave = async () => {
+    try {
+      setIsEditingPaymentMethod(false);
+      setIsEditingPickupTime(false);
+  
+      const updatedOrder = {
+        pickup_time: newPickupTime,
+        payment_method: newPaymentMethod
+      };
+  
+      const response = await fetch(`http://localhost:8000/order_details/${details.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedOrder)
+      });
+
+      setData();
+      toast({ description: 'Order details updated.' })
+  
+      if (!response.ok) {
+        throw new Error(`Failed to update order with ID ${details.id}`);
+      }
+  
+      const data = await response.json();
+      console.log(`Updated Order ID: ${details.id}`, data);
+    } catch (error) {
+      console.error('Error updating the order:', error);
+    }
+  };
+  
+
+  const handleCancel = () => {
+    setNewPaymentMethod(details.payment_method)
+    setNewPickupTime(details.pickup_time)
+    setIsEditingPaymentMethod(false)
+    setIsEditingPickupTime(false)
+  }
 
   return (
     <div className="px-2 pt-2 mb-2 flex flex-col overflow-y-auto" style={containerStyle}>
@@ -45,12 +97,50 @@ export default function OrderDetails({ onClose, details, tableHeight }: OrderDet
 
         <div className="flex flex-col py-3 border-b">
           <span className="font-bold">Payment method</span>
-          <span>{details.payment_method}</span>
+          {isEditingPaymentMethod ? (
+            <div className="flex gap-2">
+              <Input
+                id="payment-method"
+                type="text"
+                value={newPaymentMethod}
+                onChange={(e) => setNewPaymentMethod(e.target.value)}
+                className="px-2 py-1"
+              />
+              <Button variant="outline" onClick={handleSave}>Save</Button>
+              <Button variant="outline" className="text-gray-500" onClick={handleCancel}>Cancel</Button>
+            </div>
+          ) : (
+            <div className="flex justify-between">
+              <span>{details.payment_method}</span>
+              <Button variant="outline" className="text-blue-500" onClick={() => setIsEditingPaymentMethod(true)}>
+                Edit
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col py-3">
           <span className="font-bold">Pickup time</span>
-          <span>{details.pickup_time}</span>
+          {isEditingPickupTime ? (
+            <div className="flex gap-2">
+              <Input
+                id="pickup-time"
+                type="text"
+                value={newPickupTime}
+                onChange={(e) => setNewPickupTime(e.target.value)}
+                className="px-2 py-1"
+              />
+              <Button variant="outline" onClick={handleSave}>Save</Button>
+              <Button variant="outline" className="text-gray-500" onClick={handleCancel}>Cancel</Button>
+            </div>
+          ) : (
+            <div className="flex justify-between">
+              <span>{details.pickup_time}</span>
+              <Button variant="outline" className="text-blue-500" onClick={() => setIsEditingPickupTime(true)}>
+                Edit
+              </Button>
+            </div>
+          )}
         </div>
 
         <div>

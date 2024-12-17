@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback, useRef, useEffect } from "react"
-import OrderDetails, { OrderDetailsType } from "@/components/OrderDetails"
+import OrderDetails, { OrderDetailsType } from "@/app/orders/order-details"
 import { useToast } from "@/hooks/use-toast"
 
 import {

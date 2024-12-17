@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import DashboardCard from "@/components/DashboardCard";
-import { DashboardCardItem } from "@/components/DashboardCard";
+import DashboardCard from "@/app/dashboard/dashboard-card";
+import { DashboardCardItem } from "@/app/dashboard/dashboard-card";
 import { Order, columns } from "@/app/orders/columns";
 import { DataTable } from "@/app/orders/data-table";
 import { getData } from "../orders/page";

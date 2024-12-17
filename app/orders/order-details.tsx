@@ -1,8 +1,8 @@
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Image } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Image } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export interface OrderDetailsProps {
   onClose: () => void

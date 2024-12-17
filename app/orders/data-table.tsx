@@ -7,7 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
-import { Search, FilterIcon, FileText, FileSpreadsheet, Printer, SlidersHorizontal } from "lucide-react";
+import { Search, FilterIcon, FileText, FileSpreadsheet, Printer, SlidersHorizontal, ArrowUpDown } from "lucide-react";
 import { OrderStatus } from "./columns";
 import Link from "next/link";
 import OrderDetails, { OrderDetailsType } from "@/app/orders/order-details";
@@ -95,6 +95,13 @@ export function DataTable<TData extends BaseRow, TValue>({ columns, data, isDash
     }
   };
 
+  const buttonUnavailable = (buttonName: string) => {
+    toast({ 
+      title: 'Feature Unavailable', 
+      description: buttonName === 'Sort' ? 'Please click on the column title to sort the items.' : `${buttonName} button not available. Only for display.` 
+    })
+  }
+
   const table = useReactTable({
     data: newData ?? data,
     columns: columns.filter(column => !(isDashboard && (column.id === "actions" || column.id === "date"))),
@@ -146,10 +153,11 @@ export function DataTable<TData extends BaseRow, TValue>({ columns, data, isDash
                           ))}
                         </DropdownMenuContent>
                       </DropdownMenu>
-                      <Button variant="outline"><SlidersHorizontal /> View</Button>
-                      <Button variant="outline"><FileText /></Button>
-                      <Button variant="outline"><FileSpreadsheet /></Button>
-                      <Button variant="outline"><Printer /></Button>
+                      <Button variant="outline" onClick={() => buttonUnavailable('Sort')}><ArrowUpDown /> Sort</Button>
+                      <Button variant="outline" onClick={() => buttonUnavailable('View')}><SlidersHorizontal /> View</Button>
+                      <Button variant="outline" onClick={() => buttonUnavailable('Doc File')}><FileText /></Button>
+                      <Button variant="outline" onClick={() => buttonUnavailable('Spreadsheet')}><FileSpreadsheet /></Button>
+                      <Button variant="outline" onClick={() => buttonUnavailable('Print')}><Printer /></Button>
                     </div>
                   </div>
                 ) : (

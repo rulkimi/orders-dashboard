@@ -57,7 +57,7 @@ export const ActionsCell = ({ row, fetchOrderDetails, deleteOrder }: any) => (
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end">
-      <DropdownMenuItem onClick={() => fetchOrderDetails(row.original.id)}>
+      <DropdownMenuItem className="group" onClick={() => fetchOrderDetails(row.original.id)}>
         <EyeIcon className="group-hover:visible invisible" />
         View Sales Order Details
       </DropdownMenuItem>
@@ -69,7 +69,7 @@ export const ActionsCell = ({ row, fetchOrderDetails, deleteOrder }: any) => (
       <Dialog>
         <DialogTrigger className="w-full">
           <DropdownMenuItem
-            className="text-red-500 group"
+            className="text-red-500 group hover:!text-red-500"
             onSelect={e => e.preventDefault()}
           >
             <Trash2Icon className="group-hover:visible invisible" />

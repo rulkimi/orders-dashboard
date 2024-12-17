@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react"
 import OrderDetails, { OrderDetailsType } from "@/components/OrderDetails"
+import { useToast } from "@/hooks/use-toast"
 
 import {
   ColumnDef,
@@ -131,6 +132,7 @@ export function DataTable<TData extends BaseRow, TValue>({
   const tableRef = useRef(null)
   let [tableHeight, setTableHeight] = useState(0)
   const [goToPageValue, setGoToPageValue] = useState('5')
+  const { toast } = useToast();
 
   useEffect(() => {
     setData(data)
@@ -172,6 +174,9 @@ export function DataTable<TData extends BaseRow, TValue>({
       console.log(`Order with ID ${orderId} deleted successfully.`);
       // Update the state after deleting
       setData(prevData => prevData.filter(order => order.id !== orderId));  // Remove the deleted order
+      toast({
+        description: `${orderId} is successfully deleted.`
+      })
     } catch (error: any) {
       console.error(`Error deleting order with ID ${orderId}:`, error.message);
       throw error;
@@ -179,7 +184,7 @@ export function DataTable<TData extends BaseRow, TValue>({
   };
   
   
-  const updateOrderStatus = async (orderId: string, newStatus: string) => {
+  const updateOrderStatus = async (orderId: string, newStatus: OrderStatus) => {
     try {
       const response = await fetch(`http://localhost:8000/orders/${orderId}`, {
         method: 'PATCH',
@@ -200,6 +205,10 @@ export function DataTable<TData extends BaseRow, TValue>({
       setData(prevData => prevData.map(order => 
         order.id === orderId ? { ...order, status: newStatus } : order
       ));
+
+      toast({
+        description: `Status for ${orderId} is updated to ${getStatusStyles(newStatus).text}`
+      })
     } catch (error: any) {
       console.error(`Error updating order with ID ${orderId}:`, error.message);
       throw error;

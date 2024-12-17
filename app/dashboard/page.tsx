@@ -1,18 +1,17 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
-import DashboardCard from "@/app/dashboard/dashboard-card";
-import { DashboardCardItem } from "@/app/dashboard/dashboard-card";
+import DashboardCard, { DashboardCardItem } from "@/app/dashboard/dashboard-card";
 import { Order, columns } from "@/app/orders/columns";
 import { DataTable } from "@/app/orders/data-table";
-import { getData } from "../orders/page";
-import FakeChart from "./fake-chart";
+import { getData } from "@/app/orders/page";
+import FakeChart from "@/app/dashboard/fake-chart";
 
 async function getInfo(): Promise<DashboardCardItem[]> {
-  const response = await fetch('http://localhost:8000/info');
+  const response = await fetch("http://localhost:8000/info");
 
   if (!response.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error("Failed to fetch data");
   }
 
   const info: DashboardCardItem[] = await response.json();
@@ -22,7 +21,7 @@ async function getInfo(): Promise<DashboardCardItem[]> {
 export default function Dashboard() {
   const [dashboardCardItems, setDashboardCardItems] = useState<DashboardCardItem[]>([]);
   const [tableData, setTableData] = useState<Order[]>([]);
-  const [isDataUpdated, setIsDataUpdated] = useState<boolean>(false); 
+  const [isDataUpdated, setIsDataUpdated] = useState<boolean>(false);
   const [renderFakeChart, setRenderFakeChart] = useState<boolean>(false);
 
   useEffect(() => {
@@ -30,17 +29,19 @@ export default function Dashboard() {
       try {
         const dashboardItems = await getInfo();
         const orders = await getData();
-        
+
         setDashboardCardItems(dashboardItems);
         setTableData(orders);
-        setIsDataUpdated(true); 
+        setIsDataUpdated(true);
+        
         setTimeout(() => {
-          setRenderFakeChart(true)
+          setRenderFakeChart(true);
         }, 50);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
+
     fetchData();
   }, []);
 
@@ -49,14 +50,18 @@ export default function Dashboard() {
       <ul className="grid grid-cols-12 gap-4 mb-4">
         {dashboardCardItems.map((cardItem, index) => (
           <DashboardCard
-            className="col-span-12 md:col-span-6 lg:col-span-3" key={index} item={cardItem}
+            key={index}
+            className="col-span-12 md:col-span-6 lg:col-span-3"
+            item={cardItem}
           />
         ))}
       </ul>
+
       <div className="flex gap-4">
         <div className="w-1/2">
-          {(isDataUpdated && renderFakeChart) && <FakeChart />}
+          {isDataUpdated && renderFakeChart && <FakeChart />}
         </div>
+
         <div className="w-1/2">
           {isDataUpdated && <DataTable columns={columns} data={tableData} isDashboard />}
         </div>

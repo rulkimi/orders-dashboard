@@ -37,10 +37,10 @@ const chartData: ChartData = {
   },
 };
 
-const initialOption = {
+const getInitialOption = (dataKey: string) => ({
   xAxis: {
     type: 'category',
-    data: chartData['7 days'].xAxis, 
+    data: chartData[dataKey].xAxis,
     boundaryGap: false,
   },
   yAxis: {
@@ -65,7 +65,7 @@ const initialOption = {
   },
   series: [
     {
-      data: chartData['7 days'].data,
+      data: chartData[dataKey].data,
       type: 'line',
       smooth: true,
       areaStyle: {
@@ -88,29 +88,15 @@ const initialOption = {
       symbol: 'none',
     },
   ],
-};
+});
 
 export default function FakeChart() {
   const [activeFilter, setActiveFilter] = useState<string>('7 days');
-  const [option, setOption] = useState(initialOption);
+  const [option, setOption] = useState(getInitialOption('7 days'));
 
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
-    const selectedData = chartData[filter];
-
-    setOption({
-      ...initialOption,
-      xAxis: {
-        ...initialOption.xAxis,
-        data: selectedData.xAxis,
-      },
-      series: [
-        {
-          ...initialOption.series[0],
-          data: selectedData.data, 
-        },
-      ],
-    });
+    setOption(getInitialOption(filter));
   };
 
   return (
@@ -130,3 +116,4 @@ export default function FakeChart() {
     </div>
   );
 }
+

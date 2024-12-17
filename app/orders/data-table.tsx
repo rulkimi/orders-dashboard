@@ -410,20 +410,22 @@ export function DataTable<TData extends BaseRow, TValue>({
                                 <DialogHeader>
                                   <DialogTitle>Delete Order</DialogTitle>
                                   <DialogDescription>
-                                    This will delete the order.
+                                    This will delete the order <strong>{row.getAllCells().find((cell) => cell.column.id === 'id')?.getValue() as string}</strong>. Are you sure?
                                   </DialogDescription>
                                 </DialogHeader>
                                 <DialogFooter>
                                   <DialogClose asChild>
-                                    <Button variant="secondary">Cancel</Button>
+                                  <div className="bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
+                                    Cancel
+                                  </div>
                                   </DialogClose>
                                   <DialogClose>
-                                    <Button
-                                      variant="destructive"
+                                    <div
                                       onClick={() => deleteOrder(row.getAllCells().find((cell) => cell.column.id === 'id')?.getValue() as string)}
+                                      className="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
                                     >
                                       Delete
-                                    </Button>
+                                    </div>
                                   </DialogClose>
                                 </DialogFooter>
                               </DialogContent>

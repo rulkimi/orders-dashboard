@@ -1,9 +1,7 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
-
-
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
 
 export type Order = {
   id: string
@@ -15,7 +13,6 @@ export type Order = {
 }
 
 export type OrderStatus = Order["status"]
-
 
 export const columns: ColumnDef<Order>[] = [
   {
@@ -51,7 +48,7 @@ export const columns: ColumnDef<Order>[] = [
   },
   {
     accessorKey: "status",
-    header: ({ column }) => {
+    header: () => {
       return <div className="text-center">Status</div>
     },
   },

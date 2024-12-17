@@ -1,161 +1,69 @@
-"use client"
+"use client";
 
-import { useState, useCallback, useRef, useEffect } from "react"
-import OrderDetails, { OrderDetailsType } from "@/app/orders/order-details"
-import { useToast } from "@/hooks/use-toast"
-
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-
-
-import { Input } from "@/components/ui/input"
-
-import { MoreHorizontal, EyeIcon, Trash2Icon, FileText, FileSpreadsheet, Printer, SlidersHorizontal } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuCheckboxItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-import {
-  Dialog,
-  DialogTrigger,
-  DialogTitle,
-  DialogHeader,
-  DialogContent,
-  DialogFooter,
-  DialogClose
-} from '@/components/ui/dialog'
-import { DialogDescription } from "@radix-ui/react-dialog"
-
-import { 
-  Search, 
-  FilterIcon, 
-  ChevronRight, 
-  ChevronsRight, 
-  ChevronLeft, 
-  ChevronsLeft,
-  ChevronDown
-} from "lucide-react"
+import { useState, useEffect, useRef } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { useReactTable, ColumnDef, ColumnFiltersState, SortingState, VisibilityState, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
+import { Search, FilterIcon, FileText, FileSpreadsheet, Printer, SlidersHorizontal } from "lucide-react";
+import { OrderStatus } from "./columns";
+import Link from "next/link";
+import OrderDetails, { OrderDetailsType } from "@/app/orders/order-details";
+import { StatusCell, ActionsCell, getStatusStyles } from "./custom-cells";
+import { PaginationControls } from "./pagination-controls";
 
 interface BaseRow {
-  id: string
+  id: string;
 }
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
-  data: TData[]
-  isDashboard?: boolean
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
+  isDashboard?: boolean;
 }
 
-import Link from "next/link"
-
-import { OrderStatus } from "./columns"
-
-const getStatusStyles = (status: OrderStatus) => {
-  switch (status) {
-    case "preparing":
-      return { styleClass: "bg-yellow-100", text: "Preparing" };
-    case "waitpickup":
-      return { styleClass: "bg-blue-100", text: "Waiting for pickup..." };
-    case "completed":
-      return { styleClass: "bg-green-500 text-white", text: "Completed" };
-    case "cancel":
-      return { styleClass: "bg-gray-200", text: "Cancel" };
-    case "pending":
-      return { styleClass: "bg-gray-200", text: "Pending" };
-    case "refund":
-      return { styleClass: "bg-gray-200", text: "Refund" };
-    case "nopickup":
-      return { styleClass: "bg-gray-200", text: "Did not pickup" };
-    default:
-      return { styleClass: "bg-gray-200", text: "Unknown" };
-  }
-};
-
-const OrderStatuses: OrderStatus[] = [
-  "preparing",
-  "waitpickup",
-  "completed",
-  "cancel",
-  "pending",
-  "refund",
-  "nopickup",
-];
-
-export function DataTable<TData extends BaseRow, TValue>({
-  columns,
-  data,
-  isDashboard
-}: DataTableProps<TData, TValue>) {
-  const [newData, setData] = useState<TData[]>([]);
-  const [sorting, setSorting] = useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = useState({})
-  const [activeOrderId, setActiveOrderId] = useState<string>()
-  const [showOrderDetails, setShowOrderDetails] = useState(false)
+export function DataTable<TData extends BaseRow, TValue>({ columns, data, isDashboard }: DataTableProps<TData, TValue>) {
+  const [newData, setData] = useState<TData[]>(data);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+  const [activeOrderId, setActiveOrderId] = useState<string>();
+  const [showOrderDetails, setShowOrderDetails] = useState(false);
   const [orderDetails, setOrderDetails] = useState<OrderDetailsType>({
     id: '',
-    items: [{ name: '', price: 0, expiry: '', amount: 0}],
+    items: [{ name: '', price: 0, expiry: '', amount: 0 }],
     payment_method: '',
     pickup_time: '',
     subtotal: 0,
     service_tax: 0,
     voucher_applied: 0
   });
-  const tableRef = useRef(null)
-  let [tableHeight, setTableHeight] = useState(0)
-  const [goToPageValue, setGoToPageValue] = useState('5')
+  const tableRef = useRef(null);
+  const [tableHeight, setTableHeight] = useState(0);
+  const [goToPageValue, setGoToPageValue] = useState('5');
   const { toast } = useToast();
 
   useEffect(() => {
-    setData(data)
-  }, []);
+    setData(data);
+  }, [data]);
 
   useEffect(() => {
     if (!tableRef.current) return;
     const tableElement = tableRef.current as HTMLElement;
-    if (tableElement) {
-      setTableHeight(tableElement.clientHeight);
-    }
-  }, [newData])
+    setTableHeight(tableElement.clientHeight);
+  }, [newData]);
 
   const fetchOrderDetails = async (orderId: string) => {
     try {
       const response = await fetch(`http://localhost:8000/order_details/${orderId}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
       const data = await response.json();
-      setActiveOrderId(orderId)
-      setOrderDetails(data)
-      setShowOrderDetails(true)
+      setActiveOrderId(orderId);
+      setOrderDetails(data);
+      setShowOrderDetails(true);
     } catch (error) {
       console.error('Error fetching order details:', error);
     }
@@ -163,65 +71,33 @@ export function DataTable<TData extends BaseRow, TValue>({
 
   const deleteOrder = async (orderId: string) => {
     try {
-      const response = await fetch(`http://localhost:8000/orders/${orderId}`, {
-        method: 'DELETE',
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Failed to delete order with ID ${orderId}. Status: ${response.status}`);
-      }
-  
-      console.log(`Order with ID ${orderId} deleted successfully.`);
-      // Update the state after deleting
-      setData(prevData => prevData.filter(order => order.id !== orderId));  // Remove the deleted order
-      toast({
-        description: `${orderId} is successfully deleted.`
-      })
-    } catch (error: any) {
-      console.error(`Error deleting order with ID ${orderId}:`, error.message);
-      throw error;
+      const response = await fetch(`http://localhost:8000/orders/${orderId}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error(`Failed to delete order with ID ${orderId}. Status: ${response.status}`);
+      setData(prevData => prevData.filter(order => order.id !== orderId));
+      toast({ description: `${orderId} is successfully deleted.` });
+    } catch (error) {
+      console.error(`Error deleting order with ID ${orderId}:`, error);
     }
   };
-  
-  
+
   const updateOrderStatus = async (orderId: string, newStatus: OrderStatus) => {
     try {
       const response = await fetch(`http://localhost:8000/orders/${orderId}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
       });
-  
-      if (!response.ok) {
-        throw new Error(`Failed to update order with ID ${orderId}. Status: ${response.status}`);
-      }
-  
-      const updatedOrder = await response.json();
-      console.log(`Order with ID ${orderId} updated successfully.`, updatedOrder);
-  
-      // Update the state after the status change
-      setData(prevData => prevData.map(order => 
-        order.id === orderId ? { ...order, status: newStatus } : order
-      ));
-
-      toast({
-        description: `Status for ${orderId} is updated to ${getStatusStyles(newStatus).text}`
-      })
-    } catch (error: any) {
-      console.error(`Error updating order with ID ${orderId}:`, error.message);
-      throw error;
+      if (!response.ok) throw new Error(`Failed to update order with ID ${orderId}. Status: ${response.status}`);
+      setData(prevData => prevData.map(order => (order.id === orderId ? { ...order, status: newStatus } : order)));
+      toast({ description: `Status for ${orderId} is updated to ${getStatusStyles(newStatus).text}` });
+    } catch (error) {
+      console.error(`Error updating order with ID ${orderId}:`, error);
     }
   };
 
   const table = useReactTable({
     data: newData ?? data,
-    columns: columns
-      .filter(column => !(isDashboard && (column.id === "actions" || column.id === "date")))
-      .map((column) => ({
-        ...column,
-      })),
+    columns: columns.filter(column => !(isDashboard && (column.id === "actions" || column.id === "date"))),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
@@ -230,13 +106,8 @@ export function DataTable<TData extends BaseRow, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    }
-  })
+    state: { sorting, columnFilters, columnVisibility, rowSelection }
+  });
 
   return (
     <div>
@@ -252,186 +123,69 @@ export function DataTable<TData extends BaseRow, TValue>({
                       placeholder="Search..."
                       className="max-w-[400px]"
                       value={(table.getState().globalFilter as string) ?? ""}
-                      onChange={(event) => table.setGlobalFilter(event.target.value)}
+                      onChange={event => table.setGlobalFilter(event.target.value)}
                       icon={<Search size={16} />}
                     />
                     <div className="flex gap-2">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button variant="outline">
-                            <FilterIcon />
-                            Filter
+                            <FilterIcon /> Filter
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          {
-                            table
-                            .getAllColumns()
-                            .filter((column) => column.getCanHide())
-                            .map((column) => {
-                              return (
-                                <DropdownMenuCheckboxItem
-                                  key={column.id}
-                                  className="capitalize"
-                                  checked={column.getIsVisible()}
-                                  onCheckedChange={(value) => {
-                                    column.toggleVisibility(!!value)
-                                  }}
-                                >
-                                  {column.id}
-                                </DropdownMenuCheckboxItem>
-                              )
-                            })
-                          }
+                          {table.getAllColumns().filter(column => column.getCanHide()).map(column => (
+                            <DropdownMenuCheckboxItem
+                              key={column.id}
+                              className="capitalize"
+                              checked={column.getIsVisible()}
+                              onCheckedChange={value => column.toggleVisibility(!!value)}
+                            >
+                              {column.id}
+                            </DropdownMenuCheckboxItem>
+                          ))}
                         </DropdownMenuContent>
                       </DropdownMenu>
-                      <Button variant="outline">
-                        <SlidersHorizontal />
-                        View
-                      </Button>
-                      <Button variant="outline">
-                        <FileText />
-                      </Button>
-                      <Button variant="outline">
-                        <FileSpreadsheet />
-                      </Button>
-                      <Button variant="outline">
-                        <Printer />
-                      </Button>
+                      <Button variant="outline"><SlidersHorizontal /> View</Button>
+                      <Button variant="outline"><FileText /></Button>
+                      <Button variant="outline"><FileSpreadsheet /></Button>
+                      <Button variant="outline"><Printer /></Button>
                     </div>
                   </div>
                 ) : (
                   <div className="flex justify-between items-center gap-2 py-2 px-1">
                     <span className="text-gray-400">Sales Orders</span>
-                      <Link href="/orders">
-                        <Button variant="outline">
-                          View All
-                        </Button>
-                      </Link>
+                    <Link href="/orders">
+                      <Button variant="outline">View All</Button>
+                    </Link>
                   </div>
                 )}
               </TableHead>
             </TableRow>
           </TableHeader>
+
           <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
+            {table.getHeaderGroups().map(headerGroup => (
               <TableRow className="table-header" key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {
-                        header.isPlaceholder
-                          ? null
-                          : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )
-                      }
-                    </TableHead>
-                  )
-                })}
+                {headerGroup.headers.map(header => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
+
           <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map(row => (
                 <TableRow key={row.id} className={activeOrderId === row.original.id ? 'bg-teal-100/40' : ''}>
-                  {row.getVisibleCells().map((cell) => (
+                  {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>
                       {cell.column.id === "status" ? (
-                        (() => {
-                          const value = cell.getValue() as OrderStatus;
-                          const { styleClass, text } = getStatusStyles(value);
-                          return !isDashboard ? (
-                            <div className="flex justify-center">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger>
-                                  <span className={`${styleClass} px-3 py-1 rounded-full text-nowrap flex items-center`}>
-                                    {text}
-                                    <ChevronDown className="inline-block ml-1" size={16} />
-                                  </span>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                  <DropdownMenuLabel>Change Status</DropdownMenuLabel>
-                                  <DropdownMenuSeparator />
-                                  {OrderStatuses.map((status) => (
-                                    <DropdownMenuItem
-                                      key={status}
-                                      onClick={() => updateOrderStatus(row.original.id, status)}
-                                    >
-                                      {getStatusStyles(status).text}
-                                    </DropdownMenuItem>
-                                  ))}
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </div>
-                          ) : (
-                            <div className="flex justify-center">
-                              <span className={`${styleClass} px-3 py-1 rounded-full text-nowrap flex items-center`}>
-                                {text}
-                              </span>
-                            </div>
-                          )
-                        })()
+                        <StatusCell row={row} cell={cell} isDashboard={isDashboard} updateOrderStatus={updateOrderStatus} />
                       ) : cell.column.id === "actions" ? (
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" className="h-8 w-8 p-0">
-                              <span className="sr-only">Open menu</span>
-                              <MoreHorizontal className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem
-                              className="group"
-                              onClick={() => fetchOrderDetails(row.getAllCells().find((cell) => cell.column.id === 'id')?.getValue() as string)}
-                            >
-                              <EyeIcon className="group-hover:visible invisible" />
-                              View Sales Order Details
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className="group">
-                              <EyeIcon className="group-hover:visible invisible" />
-                              View Transaction
-                            </DropdownMenuItem>
-                
-                            <DropdownMenuSeparator />
-                            <Dialog>
-                              <DialogTrigger className="w-full">
-                                <DropdownMenuItem
-                                  className="text-red-500 group"
-                                  onSelect={(e) => e.preventDefault()}
-                                >
-                                  <Trash2Icon className="group-hover:visible invisible" />
-                                  Delete this Order
-                                </DropdownMenuItem>
-                              </DialogTrigger>
-                              <DialogContent>
-                                <DialogHeader>
-                                  <DialogTitle>Delete Order</DialogTitle>
-                                  <DialogDescription>
-                                    This will delete the order <strong>{row.getAllCells().find((cell) => cell.column.id === 'id')?.getValue() as string}</strong>. Are you sure?
-                                  </DialogDescription>
-                                </DialogHeader>
-                                <DialogFooter>
-                                  <DialogClose asChild>
-                                  <div className="bg-gray-200 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500">
-                                    Cancel
-                                  </div>
-                                  </DialogClose>
-                                  <DialogClose>
-                                    <div
-                                      onClick={() => deleteOrder(row.getAllCells().find((cell) => cell.column.id === 'id')?.getValue() as string)}
-                                      className="bg-red-600 text-white py-2 px-4 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-                                    >
-                                      Delete
-                                    </div>
-                                  </DialogClose>
-                                </DialogFooter>
-                              </DialogContent>
-                            </Dialog>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                        <ActionsCell row={row} fetchOrderDetails={fetchOrderDetails} deleteOrder={deleteOrder} />
                       ) : (
                         flexRender(cell.column.columnDef.cell, cell.getContext())
                       )}
@@ -441,105 +195,26 @@ export function DataTable<TData extends BaseRow, TValue>({
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={table.getVisibleLeafColumns().length}
-                  style={{ textAlign: "center" }}
-                >
+                <TableCell colSpan={table.getVisibleLeafColumns().length} style={{ textAlign: "center" }}>
                   No data available
                 </TableCell>
               </TableRow>
             )}
           </TableBody>
         </Table>
-        {(showOrderDetails && !isDashboard) && (
+
+        {showOrderDetails && !isDashboard && (
           <div className="border-l w-2/4">
-            <OrderDetails details={orderDetails} onClose={() => setShowOrderDetails(false)} tableHeight={tableHeight}/>
+            <OrderDetails details={orderDetails} onClose={() => setShowOrderDetails(false)} tableHeight={tableHeight} />
           </div>
         )}
       </div>
+
       {!isDashboard && (
         <div className="flex items-center justify-end space-x-2 py-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <label>
-                Rows per page:
-                <Button className="ml-2" size="sm" variant="outline">
-                  {table.getState().pagination.pageSize}
-                </Button>
-              </label>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              {[10, 20, 30, 50, 100].map((pageSize) => (
-                <DropdownMenuItem
-                  key={pageSize}
-                  onClick={() => table.setPageSize(Number(pageSize))}
-                >
-                  {pageSize}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.setPageIndex(1)}
-          >
-            Go To Page 2
-          </Button> */}
-          <label>
-            Go to page
-            <Input
-              id="go-to-page"
-              type="number"
-              className="w-[40px] text-center inline-block ml-1 h-[32px]"
-              value={goToPageValue}
-              onChange={(e) => setGoToPageValue(e.target.value)}
-              onKeyDown={(event) => {
-                if (event.key === "Enter") {
-                  if (Number(goToPageValue) > Math.ceil(data.length / table.getState().pagination.pageSize)) return;
-                  table.setPageIndex(Number(goToPageValue) - 1);
-                }
-              }}
-            />
-          </label>
-          <div className="px-6">
-            Page {table.getState().pagination.pageIndex + 1} of {Math.ceil(data.length / table.getState().pagination.pageSize)}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <ChevronsLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <ChevronLeft />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <ChevronRight />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <ChevronsRight />
-          </Button>
+          <PaginationControls table={table} goToPageValue={goToPageValue} setGoToPageValue={setGoToPageValue} data={data} />
         </div>
       )}
     </div>
-  )
+  );
 }

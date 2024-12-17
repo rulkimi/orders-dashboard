@@ -28,7 +28,7 @@ import {
 
 import { Input } from "@/components/ui/input"
 
-import { MoreHorizontal, EyeIcon, Trash2Icon } from "lucide-react"
+import { MoreHorizontal, EyeIcon, Trash2Icon, FileText, FileSpreadsheet, Printer, SlidersHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -231,49 +231,65 @@ export function DataTable<TData extends BaseRow, TValue>({
 
   return (
     <div>
-      <div className="rounded-md border flex">
+      <div className="rounded-2xl border flex">
         <Table ref={tableRef}>
           <TableHeader>
-            <TableRow>
-              <TableHead colSpan={columns.length}>
+            <TableRow className="table-header">
+              <TableHead colSpan={columns.length} className="border-b">
                 {!isDashboard ? (
-                  <div className="flex gap-2 py-2 px-1">
+                  <div className="flex gap-2 py-2 px-1 justify-between">
                     <Input
                       id="filter-table"
-                      placeholder="Filter table..."
+                      placeholder="Search..."
+                      className="max-w-[400px]"
                       value={(table.getState().globalFilter as string) ?? ""}
                       onChange={(event) => table.setGlobalFilter(event.target.value)}
                       icon={<Search size={16} />}
                     />
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline">
-                          <FilterIcon />
-                          Filter
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        {
-                          table
-                          .getAllColumns()
-                          .filter((column) => column.getCanHide())
-                          .map((column) => {
-                            return (
-                              <DropdownMenuCheckboxItem
-                                key={column.id}
-                                className="capitalize"
-                                checked={column.getIsVisible()}
-                                onCheckedChange={(value) => {
-                                  column.toggleVisibility(!!value)
-                                }}
-                              >
-                                {column.id}
-                              </DropdownMenuCheckboxItem>
-                            )
-                          })
-                        }
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <div className="flex gap-2">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline">
+                            <FilterIcon />
+                            Filter
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          {
+                            table
+                            .getAllColumns()
+                            .filter((column) => column.getCanHide())
+                            .map((column) => {
+                              return (
+                                <DropdownMenuCheckboxItem
+                                  key={column.id}
+                                  className="capitalize"
+                                  checked={column.getIsVisible()}
+                                  onCheckedChange={(value) => {
+                                    column.toggleVisibility(!!value)
+                                  }}
+                                >
+                                  {column.id}
+                                </DropdownMenuCheckboxItem>
+                              )
+                            })
+                          }
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                      <Button variant="outline">
+                        <SlidersHorizontal />
+                        View
+                      </Button>
+                      <Button variant="outline">
+                        <FileText />
+                      </Button>
+                      <Button variant="outline">
+                        <FileSpreadsheet />
+                      </Button>
+                      <Button variant="outline">
+                        <Printer />
+                      </Button>
+                    </div>
                   </div>
                 ) : (
                   <div className="flex justify-between items-center gap-2 py-2 px-1">
@@ -290,7 +306,7 @@ export function DataTable<TData extends BaseRow, TValue>({
           </TableHeader>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
+              <TableRow className="table-header" key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id}>
@@ -311,7 +327,7 @@ export function DataTable<TData extends BaseRow, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} className={activeOrderId === row.original.id ? 'bg-slate-100/50' : ''}>
+                <TableRow key={row.id} className={activeOrderId === row.original.id ? 'bg-teal-100/40' : ''}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {cell.column.id === "status" ? (

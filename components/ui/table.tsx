@@ -9,7 +9,7 @@ const Table = React.forwardRef<
   <div className="relative w-full overflow-auto">
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-sm", className)}
+      className={cn("w-full caption-bottom text-sm border-spacing-y-1.5 border-separate", className)}
       {...props}
     />
   </div>
@@ -54,17 +54,24 @@ TableFooter.displayName = "TableFooter"
 const TableRow = React.forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement>
->(({ className, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={cn(
-      "border-b transition-colors hover:bg-slate-100/50 data-[state=selected]:bg-slate-100 dark:hover:bg-slate-800/50 dark:data-[state=selected]:bg-slate-800",
-      className
-    )}
-    {...props}
-  />
-))
-TableRow.displayName = "TableRow"
+>(({ className, ...props }, ref) => {
+  const isHeader = className?.includes("table-header");
+
+  return (
+    <tr
+      ref={ref}
+      className={cn(
+        !isHeader &&
+          "transition-colors bg-gray-100/50 data-[state=selected]:bg-slate-100 dark:hover:bg-slate-800/50 dark:data-[state=selected]:bg-slate-800",
+        className
+      )}
+      {...props}
+    />
+  );
+});
+TableRow.displayName = "TableRow";
+
+
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,

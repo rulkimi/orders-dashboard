@@ -46,7 +46,7 @@ export default function Navbar() {
         <Input
           id="search"
           type="text"
-          className="bg-white rounded-md"
+          className="bg-white rounded-xl"
           placeholder="Search..."
           icon={<Search />}
         />

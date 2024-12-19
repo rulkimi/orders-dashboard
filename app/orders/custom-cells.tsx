@@ -61,7 +61,7 @@ export const ActionsCell = ({ row, fetchOrderDetails, deleteOrder }: any) => (
         <EyeIcon className="group-hover:visible invisible" />
         View Sales Order Details
       </DropdownMenuItem>
-      <DropdownMenuItem className="group">
+      <DropdownMenuItem className="group" onClick={() => fetchOrderDetails(row.original.id)}>
         <EyeIcon className="group-hover:visible invisible" />
         View Transaction
       </DropdownMenuItem>

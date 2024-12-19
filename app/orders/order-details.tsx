@@ -70,7 +70,6 @@ export default function OrderDetails({ onClose, details, tableHeight, setData }:
       }
   
       const data = await response.json();
-      console.log(`Updated Order ID: ${details.id}`, data);
     } catch (error) {
       console.error('Error updating the order:', error);
     }

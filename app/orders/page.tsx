@@ -18,7 +18,7 @@ export default async function Orders() {
   const data = await getData();
 
   return (
-    <div className="container mx-auto">
+    <div className="container pt-6 mx-auto">
       <div className="flex gap-4 mb-4 text-gray-500">
         <Link href="/dashboard" className="hover:text-gray-600">Dashboard</Link>
         <div className="font-bold text-black border-b-2 border-black">Sales Orders</div>

@@ -46,7 +46,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div>
+    <div className="p-12">
       <ul className="grid grid-cols-12 gap-4 mb-4">
         {dashboardCardItems.map((cardItem, index) => (
           <DashboardCard
@@ -58,7 +58,7 @@ export default function Dashboard() {
       </ul>
 
       <div className="flex flex-col lg:flex-row gap-4">
-        <div className="w-full h-[600px] lg:w-1/2">
+        <div className="w-full h-[615px] lg:w-1/2">
           {isDataUpdated && renderFakeChart && <FakeChart />}
         </div>
 

@@ -19,6 +19,8 @@ Make sure you have the following installed on your machine:
    git clone https://github.com/rulkimi/orders-dashboard.git
    ```
 
+   Copy the zip file and extract if no git is installed.
+
 2. **Install Dependencies**
 
    Navigate to the project directory and install the required dependencies:

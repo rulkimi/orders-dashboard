@@ -8,6 +8,7 @@ Make sure you have the following installed on your machine:
 
 - **Node.js** (LTS version recommended)
 - **npm** (comes with Node.js) or **yarn**
+- **Git**
 
 ### Installation
 

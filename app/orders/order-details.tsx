@@ -62,12 +62,12 @@ export default function OrderDetails({ onClose, details, tableHeight, setData }:
         body: JSON.stringify(updatedOrder)
       });
 
-      setData();
-      toast({ description: 'Order details updated.' })
-  
       if (!response.ok) {
         throw new Error(`Failed to update order with ID ${details.id}`);
       }
+
+      setData();
+      toast({ description: 'Order details updated.' })
   
       const data = await response.json();
     } catch (error) {

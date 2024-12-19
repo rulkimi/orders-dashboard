@@ -68,8 +68,6 @@ export default function OrderDetails({ onClose, details, tableHeight, setData }:
 
       setData();
       toast({ description: 'Order details updated.' })
-  
-      const data = await response.json();
     } catch (error) {
       console.error('Error updating the order:', error);
     }

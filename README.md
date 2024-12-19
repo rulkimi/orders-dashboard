@@ -48,10 +48,9 @@ Make sure you have the following installed on your machine:
 
 4. **Run the Development Server**
 
-   Return to the main project directory and start the development server:
+   Open a new terminal to the main project directory and start the development server:
 
    ```bash
-   cd ..
    npm run dev
    ```
 

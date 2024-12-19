@@ -53,6 +53,11 @@ Make sure you have the following installed on your machine:
 
    Open a new terminal to the main project directory and start the development server:
 
+   **Note: skip this and run `npm run dev` if you're already in the root/main folder
+   ```bash
+   cd orders-dashboard
+   ```
+
    ```bash
    npm run dev
    ```

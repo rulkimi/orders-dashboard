@@ -102,7 +102,7 @@ export default function FakeChart() {
   return (
     <div className="w-full h-full border rounded-2xl flex flex-col items-center justify-center p-4">
       <ReactECharts option={option} style={{ width: '100%', height: '100%' }} />
-      <ul className="flex gap-1">
+      <ul className="flex flex-wrap gap-2 whitespace-nowrap justify-center">
         {Object.keys(chartData).map((filter) => (
           <li
             key={filter}

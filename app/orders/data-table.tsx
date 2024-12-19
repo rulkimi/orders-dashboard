@@ -184,7 +184,7 @@ export function DataTable<TData extends BaseRow, TValue>({ columns, data, isDash
             ))}
           </TableHeader>
 
-          <TableBody>
+          <TableBody className="text-nowrap overflow-ellipsis">
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map(row => (
                 <TableRow key={row.id} className={activeOrderId === row.original.id ? 'bg-teal-100/40' : ''}>
@@ -212,7 +212,7 @@ export function DataTable<TData extends BaseRow, TValue>({ columns, data, isDash
         </Table>
 
         {showOrderDetails && !isDashboard && (
-          <div className="border-l w-2/4">
+          <div className="w-full fixed bg-white inset-0 z-20 md:z-0 md:bg-transparent md:relative md:border-l md:w-[600px]">
             <OrderDetails
               details={orderDetails} 
               tableHeight={tableHeight} 
